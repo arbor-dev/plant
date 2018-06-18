@@ -1,2 +1,2 @@
 # seedling
-Planet your next project
+Plant your next project
