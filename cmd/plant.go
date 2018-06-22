@@ -12,8 +12,8 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
 
+	"github.com/arbor-dev/seedling/plant"
 	"github.com/spf13/cobra"
 )
 
@@ -25,11 +25,18 @@ var plantCmd = &cobra.Command{
     Run: plantRun,
 }
 
+var port int
 
 func plantRun(cmd *cobra.Command, args []string) {
-	fmt.Println(strings.Join(args, " "))
+	fmt.Println(port)
 }
 
 func init() {
+
+	// --port or -p for api-gateway port
+	plantCmd.Flags().IntVarP(&port, "port", "p", 8000, "port for api-gateway")
+
+	plant.CreateMainFile(port, "test", "test-root")
 	rootCmd.AddCommand(plantCmd)
 }
+
