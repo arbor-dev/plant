@@ -2,13 +2,14 @@ package plant
 
 import (
 	"bytes"
-	"fmt"
 	//"os"
 	//"path"
 	//"path/filepath"
 	"text/template"
 	"strconv"
 	//"strings"
+
+	"github.com/arbor-dev/seedling/helper"
 )
 
 
@@ -36,5 +37,6 @@ func main() {
 
 	buf := new(bytes.Buffer)
 	tmpl.Execute(buf, data)
-	fmt.Println(buf.String())
+
+	helper.WriteToFile(buf.String(), "test", "main.go")
 }
