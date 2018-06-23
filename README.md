@@ -1,6 +1,13 @@
 # seedling
 Plant your next project
 
+Current Status: Only creates a main.go file in a given directory name. 
+
+TODO: 
+
+- [ ] Create Services Directory
+- [ ] Create Config Directory
+
 ### Commands
 
 #### root
