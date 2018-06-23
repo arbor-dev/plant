@@ -2,13 +2,11 @@ package plant
 
 import (
 	"bytes"
-	//"os"
-	//"path"
-	//"path/filepath"
 	"text/template"
 	"strconv"
-	//"strings"
-
+	"fmt"
+	"os"
+	
 	"github.com/arbor-dev/seedling/helper"
 )
 
@@ -17,8 +15,9 @@ func CreateMainFile(port int, project string, root string) {
 	mainTemplate :=  `package main
 
 import (
-	"github.com/{{ .root }}/{{ .project }}/config"
-	"github.com/{{ .root }}/{{ .project }}/services"
+	// Add proper imports
+    //"github.com/{{ .root }}/{{ .project }}/config"
+	//"github.com/{{ .root }}/{{ .project }}/services"
 	"github.com/arbor-dev/arbor"
 )
 
@@ -38,5 +37,10 @@ func main() {
 	buf := new(bytes.Buffer)
 	tmpl.Execute(buf, data)
 
-	helper.WriteToFile(buf.String(), "test", "main.go")
+	err := helper.WriteToFile(buf.String(), project, "main.go")
+
+	if (err != nil) {
+		fmt.Println(err)
+		os.Exit(-1)
+	}
 }
