@@ -176,3 +176,39 @@ func UpdateExample(w http.ResponseWriter, r *http.Request) {
 		os.Exit(-1)
 	}
 }
+
+func CreateConfigFile(project string) {
+	configTemplate := `package config
+
+import (
+    "github.com/arbor-dev/arbor/proxy"
+    "github.com/arbor-dev/arbor/security"
+)
+
+// {{ .project }} Config
+
+// Example service URL
+const ExampleURL = "http://localhost:5656"
+
+//Arbor configurations
+func LoadArborConfig() {
+    security.AccessLogLocation = "log/access.log"
+    security.ClientRegistryLocation = "clients.db"
+    proxy.AccessControlPolicy = "*"
+}`
+
+	data := make(map[string]interface{})
+	data["project"] = project
+
+	tmpl, _ := template.New("").Parse(configTemplate)
+
+	buf := new(bytes.Buffer)
+	tmpl.Execute(buf, data)
+
+	err := helper.WriteToFile(buf.String(), project + "/config", "config.go.template", true)
+
+	if (err != nil) {
+		fmt.Println(err)
+		os.Exit(-1)
+	}
+}
