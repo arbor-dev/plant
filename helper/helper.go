@@ -29,9 +29,11 @@ func createDir(dir string, path string) {
 	}
 }
 
-func WriteToFile(script string, dir string, file string) error {
-	path, _ := filepath.Abs(dir)
-	createDir(dir, path)
+func WriteToFile(script string, dir string, file string, newDir bool) error {
+	if newDir {
+		path, _ := filepath.Abs(dir)
+		createDir(dir, path)
+	}
 	
 	f, _ := os.Create(dir + "/" +file)
 
@@ -42,3 +44,4 @@ func WriteToFile(script string, dir string, file string) error {
 	f.Sync()
 	return err
 }
+

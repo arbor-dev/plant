@@ -42,6 +42,7 @@ func plantRun(cmd *cobra.Command, args []string) {
 	root := filepath.Base(dir)
 	
 	plant.CreateMainFile(port, project, root)
+	plant.CreateServicesFiles(project)
 	fmt.Println("Finshied planting: " + project)
 	fmt.Println("Correct import statements in generated go files!")
 }
