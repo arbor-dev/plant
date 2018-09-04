@@ -13,7 +13,9 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
+	"github.com/arbor-dev/plant/plant"
 	"github.com/spf13/cobra"
 	//"github.com/spf13/viper"
 )
@@ -21,9 +23,38 @@ import (
 var cfgFile string
 
 var rootCmd = &cobra.Command{
-	Use:   "seedling",
-	Short: "A command line tool for arbor projects",
-	Long: `seedling is a command line tool that can create and manage arbor projects`,
+	Use:   "plant [arbor project name]",
+	Short: "A command line tool to create new arbor projects",
+	Long:  `plant is a command line tool that can create and manage arbor projects`,
+	Run:   plantRun,
+}
+
+var port int
+
+func plantRun(cmd *cobra.Command, args []string) {
+	if len(args) > 1 || len(args) == 0 {
+		os.Stderr.WriteString("Error: plant command expects one name for the project\n")
+		os.Exit(-1)
+	}
+
+	fmt.Println("Planting ...")
+
+	project := args[0]
+	dir, _ := os.Getwd()
+	root := filepath.Base(dir)
+
+	plant.CreateMainFile(port, project, root)
+	plant.CreateServicesFiles(project)
+	plant.CreateConfigFile(project)
+	fmt.Println("Finshied planting: " + project)
+	fmt.Println("Correct import statements in generated go files!")
+}
+
+func init() {
+
+	// --port or -p for api-gateway port
+	rootCmd.Flags().IntVarP(&port, "port", "p", 8000, "port for api-gateway")
+
 }
 
 func Execute() {

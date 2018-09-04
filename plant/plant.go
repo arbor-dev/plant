@@ -12,17 +12,16 @@ package plant
 
 import (
 	"bytes"
-	"text/template"
-	"strconv"
 	"fmt"
 	"os"
-	
-	"github.com/arbor-dev/seedling/helper"
+	"strconv"
+	"text/template"
+
+	"github.com/arbor-dev/plant/helper"
 )
 
-
 func CreateMainFile(port int, project string, root string) {
-	mainTemplate :=  `package main
+	mainTemplate := `package main
 
 import (
 	// Add proper imports
@@ -49,14 +48,14 @@ func main() {
 
 	err := helper.WriteToFile(buf.String(), project, "main.go", true)
 
-	if (err != nil) {
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
 }
 
 func CreateServicesFiles(project string) {
-	servicesTemplate :=  `package services
+	servicesTemplate := `package services
 
 import (
 	"fmt"
@@ -91,14 +90,14 @@ func RegisterAPIs() arbor.RouteCollection {
 	buf := new(bytes.Buffer)
 	tmpl.Execute(buf, data)
 
-	err := helper.WriteToFile(buf.String(), project + "/services", "services.go", true)
+	err := helper.WriteToFile(buf.String(), project+"/services", "services.go", true)
 
-	if (err != nil) {
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
 
-	createExampleServiceFile(project, project + "/services")
+	createExampleServiceFile(project, project+"/services")
 }
 
 func createExampleServiceFile(project string, dir string) {
@@ -169,9 +168,9 @@ func UpdateExample(w http.ResponseWriter, r *http.Request) {
 	buf := new(bytes.Buffer)
 	tmpl.Execute(buf, data)
 
-	err := helper.WriteToFile(buf.String(), project + "/services", "exampleservice.go", false)
+	err := helper.WriteToFile(buf.String(), project+"/services", "exampleservice.go", false)
 
-	if (err != nil) {
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
@@ -205,9 +204,9 @@ func LoadArborConfig() {
 	buf := new(bytes.Buffer)
 	tmpl.Execute(buf, data)
 
-	err := helper.WriteToFile(buf.String(), project + "/config", "config.go.template", true)
+	err := helper.WriteToFile(buf.String(), project+"/config", "config.go.template", true)
 
-	if (err != nil) {
+	if err != nil {
 		fmt.Println(err)
 		os.Exit(-1)
 	}

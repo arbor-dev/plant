@@ -10,7 +10,7 @@
 
 package main
 
-import "github.com/arbor-dev/seedling/cmd"
+import "github.com/arbor-dev/plant/cmd"
 
 func main() {
 	cmd.Execute()
